@@ -28,33 +28,13 @@ public class CurrentAccount extends BankAccount{
         // If the license Id is valid, do nothing
         // If the characters of the license Id can be rearranged to create any valid license Id
         // If it is not possible, throw "Valid License can not be generated" Exception
-        String S=this.tradeLicenseId;
 
-        Stack<Character> s1=new Stack<>();
-        s1.push(S.charAt(0));
-        Stack<Character> s2=new Stack<>();
-
-        for(int i=1;i<S.length();i++){
-            char c=S.charAt(i);
-
-            if(s1.peek()!=c){
-                s1.push(c);
-            }else{
-                s2.push(c);
+        for(int i=0;i<this.tradeLicenseId.length()-1;i++){
+            char c1=tradeLicenseId.charAt(i);
+            char c2=tradeLicenseId.charAt(i+1);
+            if(c1==c2){
+                throw new Exception("Valid License can not be generated");
             }
-
-            while(!s2.isEmpty() && !s1.isEmpty() && s1.peek()!=s2.peek()){
-                s1.push(s2.pop());
-            }
-        }
-        if(!s2.isEmpty()){
-            throw new Exception("Valid License can not be generated");
-        }else{
-            StringBuffer sb=new StringBuffer();
-            while(!s1.isEmpty()){
-                sb.append(s1.pop());
-            }
-            this.tradeLicenseId= sb.reverse().toString();
         }
     }
 
