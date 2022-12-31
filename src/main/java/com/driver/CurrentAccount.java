@@ -1,5 +1,7 @@
 package com.driver;
 
+import java.util.Stack;
+
 public class CurrentAccount extends BankAccount{
     String tradeLicenseId; //consists of Uppercase English characters only
 
@@ -26,7 +28,35 @@ public class CurrentAccount extends BankAccount{
         // If the license Id is valid, do nothing
         // If the characters of the license Id can be rearranged to create any valid license Id
         // If it is not possible, throw "Valid License can not be generated" Exception
+        String S=this.tradeLicenseId;
 
+        Stack<Character> s1=new Stack<>();
+        s1.push(S.charAt(0));
+        Stack<Character> s2=new Stack<>();
+
+        for(int i=1;i<S.length();i++){
+            char c=S.charAt(i);
+
+            if(s1.peek()!=c){
+                s1.push(c);
+            }else{
+                s2.push(c);
+            }
+
+            while(!s2.isEmpty() && !s1.isEmpty() && s1.peek()!=s2.peek()){
+                s1.push(s2.pop());
+            }
+        }
+        if(!s2.isEmpty()){
+            throw new Exception("Valid License can not be generated");
+        }else{
+            StringBuffer sb=new StringBuffer();
+            while(!s1.isEmpty()){
+                sb.append(s1.pop());
+            }
+            this.tradeLicenseId= sb.reverse().toString();
+        }
     }
 
 }
+
