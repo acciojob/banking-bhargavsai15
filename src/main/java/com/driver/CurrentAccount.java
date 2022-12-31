@@ -47,9 +47,14 @@ public class CurrentAccount extends BankAccount{
                 s1.push(s2.pop());
             }
         }
-
         if(!s2.isEmpty()){
             throw new Exception("Valid License can not be generated");
+        }else{
+            StringBuffer sb=new StringBuffer();
+            while(!s1.isEmpty()){
+                sb.append(s1.pop());
+            }
+            this.tradeLicenseId= sb.reverse().toString();
         }
     }
 
